@@ -1,0 +1,48 @@
+<!-- <span class="text-2xl font-bold mb-4">Asignar Permisos</span>
+<mat-dialog-content>
+    @if (!formIsLoading) {
+        <form [formGroup]="permissionsForm" class="space-y-4">
+            <div class="w-full">
+                <mat-label>Listado de permisos</mat-label>
+                <mat-form-field class="w-full">
+                    <mat-select formControlName="operationType" placeholder="Listado de Permisos" [multiple]="true" #multiSelect>
+                    <mat-option>
+                        <ngx-mat-select-search [formControl]="permissionsMultiFilterCtrl" placeholderLabel="Buscar Permisos"></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let permission of filteredPermissionssMulti | async" [value]="permission.id">
+                        {{ permission.nombre }}
+                    </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </form>
+    }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close type="button">Cancelar</button>
+    <button mat-raised-button color="primary" type="button" [mat-dialog-close]="true" (click)="onSubmit()" cdkFocusInitial>Aceptar</button>
+</mat-dialog-actions> -->
+<span class="text-2xl font-bold mb-4">Asignar Permisos</span>
+@if (!formIsLoading) {
+    <form [formGroup]="permissionsForm" class="space-y-4" (ngSubmit)="onSubmit()">
+        <mat-form-field class="w-full">
+            <mat-label>Listado de permisos</mat-label>
+            <mat-select formControlName="operationType" placeholder="Listado de Permisos" [multiple]="true" #multiSelect>
+            <mat-option>
+                <ngx-mat-select-search [formControl]="permissionsMultiFilterCtrl" placeholderLabel="Buscar Permisos"></ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let permission of filteredPermissionssMulti | async" [value]="permission.id">
+                {{ permission.nombre }}
+            </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <!-- Buttons -->
+        <div class="flex justify-end space-x-2">
+            <button mat-raised-button type="button" (click)="onCancel()">Cancelar</button>
+            <button mat-raised-button color="primary" type="submit">
+                Guardar
+            </button>
+        </div>
+    </form>
+}
+

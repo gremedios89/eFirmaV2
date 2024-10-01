@@ -1,0 +1,62 @@
+@if (!formIsLoading) {
+    <span class="text-2xl font-bold mb-4">{{ !isEdit ? 'Crear Rol' : 'Editar Rol'}}</span>
+    <form [formGroup]="roleForm" (ngSubmit)="onSubmit()" class="space-y-4">
+        <!-- Name -->
+         <mat-form-field class="w-full">
+            <mat-label>Rol</mat-label>
+            <input matInput placeholder="Nombre del Rol" formControlName="name" />
+            <mat-error *ngIf="roleForm.get('name').hasError('required')">
+                El campo es obligatorio
+            </mat-error>
+            <mat-error *ngIf="roleForm.get('name').hasError('pattern')">
+                El campo solo puede contener letras, números y acentos
+            </mat-error>
+        </mat-form-field>
+    
+        <!-- Description -->
+        <mat-form-field class="w-full">
+            <mat-label>Descripción</mat-label>
+            <textarea matInput formControlName="description" placeholder="Descripción"></textarea>
+            <mat-error *ngIf="roleForm.get('description').hasError('required')">
+                El campo es obligatorio
+            </mat-error>
+            <mat-error *ngIf="roleForm.get('description').hasError('pattern')">
+                El campo solo puede contener letras, números y acentos
+            </mat-error>
+        </mat-form-field>
+    
+        <!-- Permissions -->
+        <mat-form-field class="w-full">
+            <mat-label>Asignar permisos</mat-label>
+            <mat-select formControlName="operationTypes" placeholder="Permisos disponibles" [multiple]="true" #multiSelect>
+            <mat-option>
+                <ngx-mat-select-search 
+                [formControl]="permissionsMultiFilterCtrl" 
+                [showToggleAllCheckbox]="true"
+                [toggleAllCheckboxIndeterminate]="isIndeterminate"
+                [toggleAllCheckboxChecked]="isChecked"
+                (toggleAll)="toggleSelectAll($event)"
+                placeholderLabel="Buscar permisos">
+            </ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let permission of filteredPermissionsMulti | async" [value]="permission.id">
+                {{ permission.nombre }}
+            </mat-option>
+            </mat-select>
+        </mat-form-field>
+    
+        <!-- Status -->
+        <div class="flex flex-col w-full justify-start">
+            <label class="text-lg font-medium mb-6">Estado</label>
+            <mat-checkbox formControlName="status">{{ roleForm.get('status').value ? 'Activo' : 'Inactivo' }}</mat-checkbox>
+        </div>
+    
+        <!-- Buttons -->
+        <div class="flex justify-end space-x-2">
+            <button mat-raised-button type="button" (click)="onCancel()">Cancelar</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="roleForm.invalid">
+                Guardar
+            </button>
+        </div>
+    </form>
+}

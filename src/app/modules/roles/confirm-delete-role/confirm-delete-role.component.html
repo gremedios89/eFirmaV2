@@ -1,0 +1,8 @@
+<span class="text-2xl font-bold mb-4">Confirmación de eliminación de Rol</span>
+<mat-dialog-content>
+    ¿Está seguro de que desea eliminar el Rol @if (data.role.name) {<strong>{{ data.role.name }}</strong>}?
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close>Cancelar</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>Aceptar</button>
+</mat-dialog-actions>

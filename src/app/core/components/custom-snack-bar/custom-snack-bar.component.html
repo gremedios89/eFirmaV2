@@ -1,0 +1,6 @@
+<div class="snack_container">
+    <span [ngClass]="data.panelClass" [innerHTML]="data.message"></span>
+    <button mat-button (click)="onActionClick()">
+        <strong>{{ data.actionText || 'Cerrar' }}</strong>
+    </button>
+</div>

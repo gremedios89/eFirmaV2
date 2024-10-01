@@ -1,0 +1,20 @@
+/* ----------------------------------------------------------------------------------------------------- */
+/*  @ Import/write your custom styles here.
+/*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
+/* ----------------------------------------------------------------------------------------------------- */
+
+/*Snack Bar custom styles*/
+.snack-bar-success .mdc-snackbar__surface {
+    background-color: #4caf50 !important;
+    color: white !important;
+}
+
+.snack-bar-error .mdc-snackbar__surface {
+    background-color: #f44336 !important;
+    color: white !important;
+}
+
+.snack-bar-warning .mdc-snackbar__surface {
+    background-color: #ff9800 !important;
+    color: white !important;
+}

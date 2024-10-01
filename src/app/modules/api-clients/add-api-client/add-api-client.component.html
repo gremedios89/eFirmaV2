@@ -1,0 +1,81 @@
+<span class="text-2xl font-bold mb-4">{{ !isEdit ? 'Crear Cliente API' : 'Editar Cliente API'}}</span>
+<form [formGroup]="apiClientForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <!-- Begin Date (Fecha de alta) -->
+    <div class="w-full">
+        <mat-form-field class="w-full">
+        <mat-label>Fecha de alta</mat-label>
+        <input 
+            matInput 
+            [matDatepicker]="beginPicker" 
+            formControlName="begin_date" 
+            readonly 
+            [value]="apiClientForm.get('begin_date').value | date:'yyyy-MM-dd'" />
+        <mat-datepicker-toggle matSuffix [for]="beginPicker"></mat-datepicker-toggle>
+        <mat-datepicker #beginPicker></mat-datepicker>
+        <mat-error *ngIf="apiClientForm.get('begin_date').hasError('required') && apiClientForm.get('begin_date').touched">
+            El campo es obligatorio
+        </mat-error>
+        </mat-form-field>
+    </div>
+
+    <!-- End Date (Fecha de baja) -->
+    <div class="w-full">
+        <mat-form-field class="w-full">
+        <mat-label>Fecha de baja</mat-label>
+        <input 
+            matInput 
+            [matDatepicker]="endPicker" 
+            formControlName="end_date" />
+        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+        <!-- Mostrar error si el campo está vacío -->
+        <mat-error *ngIf="apiClientForm.get('end_date').hasError('required') && apiClientForm.get('end_date').touched">
+            El campo es obligatorio
+        </mat-error>
+        <!-- Mostrar error si la end_date es menor o igual a la begin_date -->
+        <mat-error *ngIf="apiClientForm.get('end_date').hasError('endDateInvalid') && apiClientForm.get('end_date').touched">
+            La Fecha de baja debe ser mayor a la Fecha de alta
+        </mat-error>
+        </mat-form-field>
+    </div>
+
+    <!-- Name -->
+    <div class="w-full">
+        <mat-form-field class="w-full">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="name" />
+        <mat-error *ngIf="apiClientForm.get('name').hasError('required')">
+            El campo es obligatorio
+        </mat-error>
+        <mat-error *ngIf="apiClientForm.get('name').hasError('pattern')">
+            El campo solo puede contener letras, números y acentos
+        </mat-error>
+        </mat-form-field>
+    </div>
+
+    <!-- Description -->
+    <mat-form-field class="w-full">
+        <mat-label>Descripción</mat-label>
+        <textarea matInput formControlName="description" placeholder="Descripción"></textarea>
+        <mat-error *ngIf="apiClientForm.get('description').hasError('required')">
+            El campo es obligatorio
+        </mat-error>
+        <mat-error *ngIf="apiClientForm.get('description').hasError('pattern')">
+            El campo solo puede contener letras, números y acentos
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Status -->
+    <div class="flex flex-col w-full justify-start">
+        <label class="text-lg font-medium mb-6">Estado</label>
+        <mat-checkbox formControlName="enabled">{{ apiClientForm.get('enabled').value ? 'Activo' : 'Inactivo' }}</mat-checkbox>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-end space-x-2">
+        <button mat-raised-button type="button" (click)="onCancel()">Cancelar</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="apiClientForm.invalid">
+            Guardar
+        </button>
+    </div>
+</form>
