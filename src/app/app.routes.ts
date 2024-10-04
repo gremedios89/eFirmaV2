@@ -77,7 +77,8 @@ export const appRoutes: Route[] = [
             { path: 'home', loadChildren: () => import('app/modules/admin/home/home.routes') },
             { path: 'api-clients', loadChildren: () => import('app/modules/api-clients/api-clients.routes') },
             { path: 'permissions', loadChildren: () => import('app/modules/permissions/permissions.routes') },
-            { path: 'roles', loadChildren: () => import('app/modules/roles/roles.routes') }
+            { path: 'roles', loadChildren: () => import('app/modules/roles/roles.routes') },
+            { path: 'clients', loadChildren: () => import('app/modules/clients/clients.routes') },
         ]
     }
 ];

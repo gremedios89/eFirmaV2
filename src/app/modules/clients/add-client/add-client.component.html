@@ -1,0 +1,375 @@
+<!-- <span class="text-2xl font-bold mb-4">{{ !isEdit ? 'Adicionar Cliente' : 'Editar Cliente'}}</span>
+<label id="example-radio-group-label">Tipo de Cliente</label>
+<mat-radio-group aria-label="Select an option" class="mt-4" (change)="changeValue($event)">
+    <mat-radio-button value="natural">Cliente Natural</mat-radio-button>
+    <mat-radio-button value="juridico">Cliente Jurídico</mat-radio-button>
+</mat-radio-group> -->
+
+
+
+<div class="flex min-w-0 flex-auto flex-col">
+    <!-- Header -->
+    <div
+        class="bg-card flex flex-0 flex-col border-b p-6 dark:bg-transparent sm:flex-row sm:items-center sm:justify-between"
+    >
+        <div class="min-w-0 flex-1">
+            <!-- Title -->
+            <div class="mt-2">
+                <h2
+                    class="truncate text-2xl font-bold leading-7 tracking-tight sm:leading-10 md:text-4xl"
+                >
+                    Roles
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Role List -->
+    <div class="flex-auto p-6 sm:p-10">
+        <!-- CONTENT GOES HERE -->
+        <div class="flex flex-col mb-4">
+            <label id="example-radio-group-label" class="font-bold mb-2">Tipo de Cliente</label>
+            <mat-radio-group aria-label="Select an option" class="mt-2" (change)="changeValue($event)">
+              <mat-radio-button value="natural">Cliente Natural</mat-radio-button>
+              <mat-radio-button value="juridico">Cliente Jurídico</mat-radio-button>
+            </mat-radio-group>
+        </div>
+
+        @if (institutional !== undefined) {        
+            <form
+                class="bg-card overflow-hidden rounded p-4 shadow"
+                [formGroup]="horizontalStepperForm"
+            >
+                <mat-horizontal-stepper [linear]="true" #horizontalStepper>
+                    <mat-step
+                        [formGroupName]="'step1'"
+                        [stepControl]="horizontalStepperForm.get('step1')"
+                        #horizontalStepperStep1
+                    >
+                        <ng-template matStepLabel
+                            >Datos del Cliente</ng-template
+                        >
+                        <p class="my-6 font-medium">
+                            Por favor introduzca la información del Cliente
+                        </p>
+                        <div class="grid grid-cols-2 gap-4">
+                            <!-- Columna Izquierda -->
+                            <mat-form-field class="w-full">
+                                <mat-label>Nombre</mat-label>
+                                <input matInput placeholder="Nombre" formControlName="nombre" />
+                                <mat-error *ngIf="horizontalStepperForm.get('step1.nombre').hasError('required')">
+                                    El campo es obligatorio
+                                </mat-error>
+                                <mat-error *ngIf="horizontalStepperForm.get('step1.nombre').hasError('pattern')">
+                                    El campo solo puede contener letras y acentos
+                                </mat-error>
+                            </mat-form-field>
+                        
+                            <mat-form-field class="w-full">
+                                <mat-label>Nombre corto</mat-label>
+                                <input
+                                    matInput
+                                    placeholder="Nombre corto"
+                                    formControlName="nombreCorto"
+                                />
+                                <mat-error *ngIf="horizontalStepperForm.get('step1.nombreCorto').hasError('required')">
+                                    El campo es obligatorio
+                                </mat-error>
+                                <mat-error *ngIf="horizontalStepperForm.get('step1.nombreCorto').hasError('pattern')">
+                                    El campo solo puede contener letras
+                                </mat-error>
+                            </mat-form-field>
+                        
+                            <mat-form-field class="w-full">
+                                <mat-label>Apellidos</mat-label>
+                                <input
+                                    matInput
+                                    placeholder="Apellidos"
+                                    formControlName="apellidos"
+                                />
+                                <mat-error *ngIf="horizontalStepperForm.get('step1.apellidos').hasError('required')">
+                                    El campo es obligatorio
+                                </mat-error>
+                                <mat-error *ngIf="horizontalStepperForm.get('step1.apellidos').hasError('pattern')">
+                                    El campo solo puede contener letras y acentos
+                                </mat-error>
+                            </mat-form-field>
+                        
+                            <mat-form-field class="w-full">
+                                <mat-label>Correo</mat-label>
+                                <input matInput placeholder="Correo" formControlName="correo" />
+                                <mat-error *ngIf="horizontalStepperForm.get('step1.correo').hasError('required')">
+                                    El campo es obligatorio
+                                </mat-error>
+                                <mat-error *ngIf="horizontalStepperForm.get('step1.correo').hasError('email')">
+                                    Correo inválido.
+                                </mat-error>
+                            </mat-form-field>
+                        
+                            <mat-form-field class="w-full">
+                                <mat-label>CI/Pasaporte</mat-label>
+                                <input
+                                    matInput
+                                    placeholder="CI/Pasaporte"
+                                    formControlName="ciPasaporte"
+                                />
+                                <mat-error *ngIf="horizontalStepperForm.get('step1.ciPasaporte').hasError('required')">
+                                    El campo es obligatorio
+                                </mat-error>
+                                <mat-error *ngIf="horizontalStepperForm.get('step1.ciPasaporte')?.touched">
+                                    CI debe tener 11 dígitos y Pasaporte inicia con letra mayúscula y tiene 6 o 7 dígitos.
+                                </mat-error>
+                            </mat-form-field>
+                        
+                            <!-- Columna Derecha -->
+                            <mat-form-field class="w-full">
+                                <mat-label>Dirección</mat-label>
+                                <input matInput placeholder="Dirección" formControlName="direccion" />
+                                <mat-error *ngIf="horizontalStepperForm.get('step1.direccion').hasError('required')">
+                                    El campo es obligatorio
+                                </mat-error>
+                                <mat-error *ngIf="horizontalStepperForm.get('step1.direccion').hasError('pattern')">
+                                    Solo se permiten letras, números y los caracteres especiales #, %, /
+                                </mat-error>
+                            </mat-form-field>
+                        
+                            <mat-form-field class="w-full">
+                                <mat-label>Código REEUP</mat-label>
+                                <input
+                                    matInput
+                                    placeholder="Código REEUP"
+                                    formControlName="codigoReeup"
+                                />
+                                <mat-error *ngIf="horizontalStepperForm.get('step1.codigoReeup').hasError('required')">
+                                    El campo es obligatorio
+                                </mat-error>
+                                <mat-error *ngIf="horizontalStepperForm.get('step1.codigoReeup').hasError('minlength')">
+                                    Debe tener al menos 4 caracteres
+                                </mat-error>
+                            </mat-form-field>
+                        
+                            <mat-form-field class="w-full">
+                                <mat-label>Teléfono</mat-label>
+                                <input matInput placeholder="Teléfono" formControlName="telefono" />
+                                <mat-error *ngIf="horizontalStepperForm.get('step1.telefono').hasError('required')">
+                                    El campo es obligatorio
+                                </mat-error>
+                                <mat-error *ngIf="horizontalStepperForm.get('step1.telefono').hasError('pattern')">
+                                    Debe contener 8 o 10 dígitos
+                                </mat-error>
+                            </mat-form-field>
+                        
+                            <mat-form-field class="w-full">
+                                <mat-label>País</mat-label>
+                                <mat-select formControlName="pais">
+                                <mat-option value="Cuba">Cuba</mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="horizontalStepperForm.get('step1.pais').hasError('required')">
+                                    El campo es obligatorio
+                                </mat-error>
+                            </mat-form-field>
+                        
+                            <mat-form-field class="w-full">
+                                <mat-label>Provincia</mat-label>
+                                <mat-select formControlName="provincia">
+                                @for (item of provincias; track $index) {
+                                    <mat-option value="{{ item.name }}">{{ item.name }}</mat-option>
+                                }
+                                </mat-select>
+                                <mat-error *ngIf="horizontalStepperForm.get('step1.provincia').hasError('required')">
+                                    El campo es obligatorio
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        
+                        <!-- Campo Descripción -->
+                        <mat-form-field class="w-full">
+                            <mat-label>Descripción</mat-label>
+                            <textarea matInput placeholder="Descripción" formControlName="descripcion"></textarea>
+                            <mat-error *ngIf="horizontalStepperForm.get('step1.descripcion').hasError('required')">
+                                El campo es obligatorio
+                            </mat-error>
+                        </mat-form-field>
+
+                        <div class="flex justify-end">
+                            <button
+                                class="px-8"
+                                mat-flat-button
+                                [color]="'primary'"
+                                [disabled]="
+                                    horizontalStepperStep1.stepControl
+                                        .pristine ||
+                                    horizontalStepperStep1.stepControl.invalid
+                                "
+                                type="button"
+                                matStepperNext
+                            >
+                                Siguiente
+                            </button>
+                        </div>
+                    </mat-step>
+        
+                    <mat-step
+                        [formArray]="horizontalStepperForm.get('step2')"
+                        [stepControl]="horizontalStepperForm.get('step2')"
+                        #horizontalStepperStep2
+                    >
+                        <ng-template matStepLabel>Datos de Cuentas Bancarias</ng-template>
+                        <p class="my-6 font-medium">
+                            Por favor introduzca la información de las cuentas bancarias
+                        </p>
+                        <div formArrayName="step2">
+                            <div *ngFor="let account of bankAccounts.controls; let i = index" [formGroupName]="i">
+                              <!-- Contenedor para 2 columnas -->
+                              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <!-- Primera columna con 3 campos -->
+                                <div class="flex flex-col space-y-4">
+                                  <!-- Campo Número de Cuenta -->
+                                  <mat-form-field class="w-full">
+                                    <mat-label>Número de Cuenta</mat-label>
+                                    <input matInput placeholder="Número de cuenta" formControlName="numeroCuenta" />
+                                    <mat-error *ngIf="account.get('numeroCuenta').hasError('required')">
+                                      Número de cuenta es obligatorio
+                                    </mat-error>
+                                    <mat-error *ngIf="account.get('numeroCuenta').hasError('pattern')">
+                                      Debe tener 16 dígitos
+                                    </mat-error>
+                                  </mat-form-field>
+                        
+                                  <!-- Campo Titular -->
+                                  <mat-form-field class="w-full">
+                                    <mat-label>Titular</mat-label>
+                                    <input matInput placeholder="Titular" formControlName="titular" />
+                                    <mat-error *ngIf="account.get('titular').hasError('required')">
+                                      Titular es obligatorio
+                                    </mat-error>
+                                    <mat-error *ngIf="account.get('titular').hasError('pattern')">
+                                      Solo debe contener letras
+                                    </mat-error>
+                                  </mat-form-field>
+                        
+                                  <!-- Campo Moneda -->
+                                  <mat-form-field class="w-full">
+                                    <mat-label>Moneda</mat-label>
+                                    <mat-select placeholder="Moneda" formControlName="moneda">
+                                        @for (item of monedas; track $index) {
+                                            <mat-option value="{{ item.id }}">{{ item.descripcion }}</mat-option>
+                                        }
+                                    </mat-select>
+                                    <mat-error *ngIf="account.get('moneda').hasError('required')">
+                                      Moneda es obligatoria
+                                    </mat-error>
+                                  </mat-form-field>
+                                </div>
+                        
+                                <!-- Segunda columna con 3 campos -->
+                                <div class="flex flex-col space-y-4">
+                                  <!-- Campo Banco -->
+                                  <mat-form-field class="w-full">
+                                    <mat-label>Banco</mat-label>
+                                    <input matInput placeholder="Banco" formControlName="banco" />
+                                    <mat-error *ngIf="account.get('banco').hasError('required')">
+                                      Banco es obligatorio
+                                    </mat-error>
+                                    <mat-error *ngIf="account.get('banco').hasError('pattern')">
+                                      Solo debe contener letras
+                                    </mat-error>
+                                  </mat-form-field>
+                        
+                                  <!-- Campo Sucursal -->
+                                  <mat-form-field class="w-full">
+                                    <mat-label>Sucursal</mat-label>
+                                    <input matInput placeholder="Sucursal" formControlName="sucursal" />
+                                    <mat-error *ngIf="account.get('sucursal').hasError('required')">
+                                      Sucursal es obligatoria
+                                    </mat-error>
+                                    <mat-error *ngIf="account.get('sucursal').hasError('pattern')">
+                                      Debe tener 4 dígitos
+                                    </mat-error>
+                                  </mat-form-field>
+                        
+                                  <!-- Campo Observaciones como textarea -->
+                                  <mat-form-field class="w-full">
+                                    <mat-label>Observaciones</mat-label>
+                                    <textarea matInput placeholder="Observaciones" formControlName="observaciones" rows="4"></textarea>
+                                    <mat-error *ngIf="account.get('observaciones').hasError('required')">
+                                      Observaciones son obligatorias
+                                    </mat-error>
+                                    <mat-error *ngIf="account.get('observaciones').hasError('pattern')">
+                                      Solo debe contener letras
+                                    </mat-error>
+                                  </mat-form-field>
+                                </div>
+                              </div>
+                        
+                              <!-- Botón para eliminar cuenta bancaria -->
+                              <div class="flex justify-end mt-4">
+                                <button mat-button color="warn" type="button" (click)="removeBankAccount(i)">Eliminar</button>
+                              </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Botón para añadir nueva cuenta bancaria -->
+                        <div class="flex justify-end mt-4">
+                            <button mat-raised-button type="button" color="primary" (click)="addBankAccount()">Añadir Cuenta Bancaria</button>
+                        </div>
+
+                        <div class="flex justify-end mt-4">
+                            <button
+                                class="mr-2 px-8"
+                                mat-flat-button
+                                [color]="'accent'"
+                                type="button"
+                                matStepperPrevious
+                            >
+                                Regresar
+                            </button>
+                            <button
+                                class="px-8"
+                                mat-flat-button
+                                [color]="'primary'"
+                                [disabled]="
+                                    horizontalStepperStep2.stepControl
+                                        .pristine ||
+                                    horizontalStepperStep2.stepControl.invalid
+                                "
+                                type="button"
+                                matStepperNext
+                            >
+                                Siguiente
+                            </button>
+                        </div>
+                    </mat-step>
+        
+                    <mat-step>
+                        <ng-template matStepLabel>Enviar</ng-template>
+                        <p class="my-6 font-medium">
+                           Gracias por completar la información recogida en este formulario! Usted
+                           puede regresar si desea esditar esta información, o Guardar los datos del Cliente.
+                        </p>
+                        <div class="mt-8 flex justify-end">
+                            <button
+                                class="mr-2 px-8"
+                                mat-flat-button
+                                [color]="'accent'"
+                                type="button"
+                                matStepperPrevious
+                            >
+                                Regresar
+                            </button>
+                            <button
+                                class="px-8"
+                                mat-flat-button
+                                [color]="'primary'"
+                                type="reset"
+                                (click)="horizontalStepper.reset()"
+                            >
+                                Guardar
+                            </button>
+                        </div>
+                    </mat-step>
+                </mat-horizontal-stepper>
+            </form>
+        }
+    </div>
+</div>
