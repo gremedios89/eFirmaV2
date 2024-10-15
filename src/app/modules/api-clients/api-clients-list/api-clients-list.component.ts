@@ -111,6 +111,7 @@ export class ApiClientsListComponent implements OnInit, OnDestroy {
   addApiClient(element?: any): void {
     const dialogRef = this.dialog.open(AddApiClientComponent, {
       width: '600px',
+      maxHeight: '90vh',
       data: {
         client: element,
       },

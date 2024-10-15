@@ -1,0 +1,86 @@
+<span class="text-2xl font-bold mb-4">Detalles del Plan</span>
+
+<!-- Formulario en dos columnas -->
+<div class="grid grid-cols-2 gap-6">
+  
+  <!-- Columna 1 -->
+  <div class="space-y-4">
+      <div>
+          <label class="block text-lg font-medium text-gray-700">Estado</label>
+          <p class="mt-1 text-gray-900">{{ data.plan.activo ? 'Habilitado' : 'Deshabilitado' }}</p>
+      </div>
+      
+      <div>
+          <label class="block text-lg font-medium text-gray-700">Asociado</label>
+          <p class="mt-1 text-gray-900">{{ data.plan.asociado ? 'Sí' : 'No' }}</p>
+      </div>
+
+      <div>
+          <label class="block text-lg font-medium text-gray-700">Cantidad de Firmas</label>
+          <p class="mt-1 text-gray-900">{{ data.plan.cantidadFirmas }}</p>
+      </div>
+
+      <div>
+          <label class="block text-lg font-medium text-gray-700">Cantidad de Validaciones</label>
+          <p class="mt-1 text-gray-900">{{ data.plan.cantidadValidaciones }}</p>
+      </div>
+
+      <div>
+          <label class="block text-lg font-medium text-gray-700">Cantidad de Certificados</label>
+          <p class="mt-1 text-gray-900">{{ data.plan.cantidad_certificados }}</p>
+      </div>
+
+      <div>
+          <label class="block text-lg font-medium text-gray-700">Costo</label>
+          <p class="mt-1 text-gray-900">{{ data.plan.costo | currency }}</p>
+      </div>
+
+      <div>
+          <label class="block text-lg font-medium text-gray-700">Duración</label>
+          <p class="mt-1 text-gray-900">{{ data.plan.duracion }}</p>
+      </div>
+  </div>
+
+  <!-- Columna 2 -->
+  <div class="space-y-4">
+      <div>
+          <label class="block text-lg font-medium text-gray-700">Inicio</label>
+          <p class="mt-1 text-gray-900">{{ data.plan.inicio | date: 'longDate' }}</p>
+      </div>
+
+      <div>
+          <label class="block text-lg font-medium text-gray-700">Nombre</label>
+          <p class="mt-1 text-gray-900">{{ data.plan.nombre }}</p>
+      </div>
+
+      <div>
+          <label class="block text-lg font-medium text-gray-700">Tipo de Plan</label>
+          <p class="mt-1 text-gray-900">{{ data.plan.tipoPlan ? 'Especial' : 'Regular' }}</p>
+      </div>
+
+      <div>
+          <label class="block text-lg font-medium text-gray-700">Tipo de Plan Natural</label>
+          <p class="mt-1 text-gray-900">{{ data.plan.tipoPlanNatural ? 'Sí' : 'No' }}</p>
+      </div>
+
+      <div>
+          <label class="block text-lg font-medium text-gray-700">Vencimiento</label>
+          <p class="mt-1 text-gray-900">N/A</p>
+      </div>
+
+      <div>
+          <label class="block text-lg font-medium text-gray-700">Vigencia Compra</label>
+          <p class="mt-1 text-gray-900">{{ data.plan.vencimiento ? (data.plan.vencimiento | date) : 'No Aplica' }}</p>
+      </div>
+
+      <div class="col-span-2 mt-4">
+          <label class="block text-lg font-medium text-gray-700">Descripción</label>
+          <p class="mt-1 text-gray-900">{{ data.plan.descripcion }}</p>
+      </div>
+  </div>
+</div>
+
+<!-- Botón de Cerrar -->
+<div class="flex justify-end mt-6">
+  <button mat-raised-button color="primary" (click)="onClose()">Cerrar</button>
+</div>

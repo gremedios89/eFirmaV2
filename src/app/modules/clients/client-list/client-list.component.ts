@@ -16,6 +16,8 @@ import { ClientsService } from 'app/core/services/clients/clients.service';
 import { NotificationsService } from 'app/core/services/notifications/notifications.service';
 import { Subject, takeUntil } from 'rxjs';
 import { AddClientComponent } from '../add-client/add-client.component';
+import { ConfirmDeleteClientComponent } from '../confirm-delete-client/confirm-delete-client.component';
+import { isNullOrEmpty } from 'app/core/utils/typescript';
 
 @Component({
   selector: 'app-client-list',
@@ -3649,11 +3651,37 @@ export class ClientListComponent implements OnInit, OnDestroy {
   }
 
   addClient(element?: any): void {
-    this._router.navigate(['/clients/add-client']);
+    if (isNullOrEmpty(element)) {
+        this._router.navigate(['clients/add-client']);
+    } else {
+        this._router.navigate(['clients/add-client'], {
+            queryParams: { id: element.id }
+        });
+    }
+    
   }
 
-  deleteClient(): void {
+  deleteClient(element: any): void {
+    const dialogRef = this.dialog.open(ConfirmDeleteClientComponent, {
+        width: '500px',
+        data: {
+          client: element
+        }
+      });
 
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.clientsService.deleteClient(element.id).subscribe({
+            next: (resp) => {
+              this.loadClientList();
+              this.notificationService.showSuccess(`El Cliente <strong>${element.name}</strong> se ha eliminado exitosamente.`);
+            },
+            error: (error) => {
+              console.log(error);
+            }
+          });
+        }
+      });
   }
 
   assignPermissions(): void {

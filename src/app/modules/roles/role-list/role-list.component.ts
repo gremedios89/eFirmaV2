@@ -62,7 +62,7 @@ export class RoleListComponent implements OnInit, OnDestroy {
       error: (error) => {
         console.log(error);
       }
-    })
+    });
   }
 
   configDataSource(): void {
@@ -93,7 +93,7 @@ export class RoleListComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       if (!isNullOrEmpty(result)) {
         if (result.operation === 'add') {
-          this.notificationService.showSuccess(`El Rol <strong>${result.resp.name}</strong> creado exitosamente.`);
+          this.notificationService.showSuccess(`El Rol <strong>${result.resp.name}</strong> se ha creado exitosamente.`);
         } else if (result.operation === 'edit') {
           this.notificationService.showSuccess(`El Rol <strong>${element.name}</strong> editado exitosamente.`);
         }
@@ -116,7 +116,7 @@ export class RoleListComponent implements OnInit, OnDestroy {
         this.roleService.deleteRole(element.id).subscribe({
           next: (resp) => {
             this.loadRoleList();
-            this.notificationService.showSuccess(`El Rol <strong>${element.name}</strong> se eliminado exitosamente.`);
+            this.notificationService.showSuccess(`El Rol <strong>${element.name}</strong> se ha eliminado exitosamente.`);
           },
           error: (error) => {
             console.log(error);

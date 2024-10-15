@@ -1,0 +1,116 @@
+<div class="flex min-w-0 flex-auto flex-col">
+    <!-- Header -->
+    <div
+        class="bg-card flex flex-0 flex-col border-b p-6 dark:bg-transparent sm:flex-row sm:items-center sm:justify-between"
+    >
+        <div class="min-w-0 flex-1">
+            <!-- Title -->
+            <div class="mt-2">
+                <h2
+                    class="truncate text-2xl font-bold leading-7 tracking-tight sm:leading-10 md:text-4xl"
+                >
+                    Planes
+                </h2>
+            </div>
+        </div>
+        <!-- Actions -->
+        <div class="mt-6 flex shrink-0 items-center sm:ml-4 sm:mt-0">
+            <button class="ml-3" (click)="addPlan()" mat-flat-button [color]="'accent'">
+                <mat-icon
+                    class="icon-size-4"
+                    [svgIcon]="'add'"
+                ></mat-icon>
+                <span class="ml-2">Adicionar Plan</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Role List -->
+    <div class="flex-auto p-6 sm:p-10">
+        <!-- CONTENT GOES HERE -->
+        <mat-form-field>
+            <mat-label>Filtrar</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ejemplo: Softel" #filter>
+          </mat-form-field>
+          
+          <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
+          
+              <!-- Nombre Column -->
+              <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                <td mat-cell *matCellDef="let row"> {{ row.nombre }} </td>
+              </ng-container>
+
+              <!-- Cant de Firmas Column -->
+              <ng-container matColumnDef="cantidadFirmas">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Límite de Firmas </th>
+                <td mat-cell *matCellDef="let row"> {{ row.cantidadFirmas }} </td>
+              </ng-container>
+
+              <!-- Costo Column -->
+              <ng-container matColumnDef="costo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Costo </th>
+                <td mat-cell *matCellDef="let row"> {{ row.costo }} </td>
+              </ng-container>
+          
+              <!-- Estado -->
+              <ng-container matColumnDef="activo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+                <td mat-cell *matCellDef="let row"> 
+                  <span [className]="row.activo ? 'enabled_status': 'disabled_status'">
+                    {{ row.activo === 1 || row.activo === true ? "Habilitado" : "Deshabilitado" }}
+                  </span>
+                </td>
+              </ng-container>
+
+              <!-- Cantidad de Certificados Column -->
+              <ng-container matColumnDef="cantidad_certificados">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Límite de certificados </th>
+                <td mat-cell *matCellDef="let row"> {{ row.cantidad_certificados }} </td>
+              </ng-container>
+
+              <!-- Description Column -->
+              <ng-container matColumnDef="descripcion">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </th>
+                <td mat-cell *matCellDef="let row"> {{ row.descripcion }} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                <td mat-cell *matCellDef="let row"> 
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu" class="tight-menu">            
+                        <button mat-menu-item (click)="deletePlan(row)">
+                          <mat-icon>delete</mat-icon>
+                          <span>Eliminar</span>
+                        </button>
+
+                        <button mat-menu-item (click)="planDetail(row)">
+                            <mat-icon>visibility</mat-icon>
+                            <span>Detalles</span>
+                        </button>
+
+                        <button mat-menu-item (click)="addPlan(row)">
+                            <mat-icon>link</mat-icon>
+                            <span>Asociar clientes a este plan</span>
+                        </button>
+                    </mat-menu>
+                </td>
+              </ng-container>
+          
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          
+              <!-- Row shown when there is no matching data. -->
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No data matching the filter "{{filter.value}}"</td>
+              </tr>
+            </table>
+          
+            <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+        </div>
+    </div>
+</div>

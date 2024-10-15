@@ -79,6 +79,7 @@ export const appRoutes: Route[] = [
             { path: 'permissions', loadChildren: () => import('app/modules/permissions/permissions.routes') },
             { path: 'roles', loadChildren: () => import('app/modules/roles/roles.routes') },
             { path: 'clients', loadChildren: () => import('app/modules/clients/clients.routes') },
+            { path: 'plans', loadChildren: () => import('app/modules/plans/plans.routes') },
         ]
     }
 ];

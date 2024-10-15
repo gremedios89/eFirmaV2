@@ -17,4 +17,12 @@ export class ClientsService {
   getCoinList(): Observable<any> {
     return this._httpClient.get(`${this.apiUrl}/listarMonedas`);
   }
+
+  deleteClient(id: any): Observable<any> {
+    return this._httpClient.delete(`${this.apiUrl}/deleteClient/${id}`);
+  }
+
+  getClientById(id: any): Observable<any> {
+    return this._httpClient.get(`${this.apiUrl}/client/${id}`);
+  }
 }
