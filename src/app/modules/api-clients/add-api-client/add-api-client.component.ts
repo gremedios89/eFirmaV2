@@ -42,7 +42,7 @@ export class AddApiClientComponent implements OnInit {
     } else {
       this.selectedApiClient = this.data.client;
       this.isEdit = true;
-      this.initEditForm(this.data.client);
+      this.initEditForm(this.selectedApiClient);
     } 
   }
 

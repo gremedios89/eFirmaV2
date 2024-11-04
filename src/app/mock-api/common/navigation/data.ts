@@ -51,13 +51,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         icon : 'heroicons_solid:briefcase',
         link : '/plans'
     },
-    {
+    /*{
         id   : 'reportes',
         title: 'Reportes',
         type : 'basic',
         icon : 'heroicons_solid:document-chart-bar',
         link : '/reports'
-    },
+    },*/
     {
         id   : 'cerrar_sesion',
         title: 'Cerrar sesión',

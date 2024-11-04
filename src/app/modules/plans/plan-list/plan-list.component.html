@@ -82,21 +82,23 @@
                     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                         <mat-icon>more_vert</mat-icon>
                     </button>
-                    <mat-menu #menu="matMenu" class="tight-menu">            
-                        <button mat-menu-item (click)="deletePlan(row)">
-                          <mat-icon>delete</mat-icon>
-                          <span>Eliminar</span>
-                        </button>
-
-                        <button mat-menu-item (click)="planDetail(row)">
-                            <mat-icon>visibility</mat-icon>
-                            <span>Detalles</span>
-                        </button>
-
-                        <button mat-menu-item (click)="addPlan(row)">
-                            <mat-icon>link</mat-icon>
-                            <span>Asociar clientes a este plan</span>
-                        </button>
+                    <mat-menu #menu="matMenu" class="tight-menu">      
+                      <button mat-menu-item (click)="planDetail(row)">
+                        <mat-icon>visibility</mat-icon>
+                        <span>Detalles</span>
+                      </button>  
+                      <button mat-menu-item (click)="addPlan(row)">
+                        <mat-icon>edit</mat-icon>
+                        <span>Editar</span>
+                      </button>
+                      <button mat-menu-item (click)="deletePlan(row)">
+                        <mat-icon>delete</mat-icon>
+                        <span>Eliminar</span>
+                      </button>
+                      <button mat-menu-item>
+                        <mat-icon>link</mat-icon>
+                        <span>Asociar clientes a este plan</span>
+                      </button>
                     </mat-menu>
                 </td>
               </ng-container>

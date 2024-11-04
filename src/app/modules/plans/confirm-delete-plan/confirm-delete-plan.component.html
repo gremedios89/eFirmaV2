@@ -1,0 +1,8 @@
+<span class="text-2xl font-bold mb-4">Confirmación de eliminación de Plan</span>
+<mat-dialog-content>
+    ¿Está seguro de que desea eliminar el Plan @if (data.plan.nombre) {<strong>{{ data.plan.nombre }}</strong>}?
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close>Cancelar</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>Aceptar</button>
+</mat-dialog-actions>

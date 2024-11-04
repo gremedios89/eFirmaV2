@@ -13,4 +13,12 @@ export class PlansService {
   getPlansList(): Observable<any> {
     return this._httpClient.get(`${this.apiUrl}/listPlan`);
   }
+
+  getTipoPagoList(): Observable<any> {
+    return this._httpClient.get(`${this.apiUrl}/listarTipoPago`);
+  }
+
+  deletePlan(planId: any): Observable<any> {
+    return this._httpClient.post(`${this.apiUrl}/deletePlan/${planId}`, {});
+  }
 }

@@ -1,86 +1,105 @@
-<span class="text-2xl font-bold mb-4">{{ !isEdit ? 'Crear Plan' : 'Editar Plan' }}</span>
-<form [formGroup]="formPlan" (ngSubmit)="onSubmit()" class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
-  <!-- Columna Izquierda -->
-  <mat-form-field class="w-full">
-    <mat-label>Nombre</mat-label>
-    <input matInput formControlName="nombre" placeholder="Nombre" />
-    <mat-error *ngIf="formPlan.get('nombre')?.invalid">Nombre es obligatorio y debe contener solo letras</mat-error>
-  </mat-form-field>
+@if (showForm) {
+  <span class="text-2xl font-bold mb-4">{{ !isEdit ? 'Crear Plan' : 'Editar Plan' }}</span>
+  <form [formGroup]="formPlan" (ngSubmit)="onSubmit()" class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+    <!-- Columna Izquierda -->
+    <mat-form-field class="w-full">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="nombre" placeholder="Nombre" />
+      <mat-error *ngIf="formPlan.get('nombre')?.invalid">Nombre es obligatorio y debe contener solo letras</mat-error>
+    </mat-form-field>
 
-  <mat-form-field class="w-full">
-    <mat-label>Duración (meses)</mat-label>
-    <input matInput type="number" formControlName="duracion" placeholder="Meses" />
-    <mat-error *ngIf="formPlan.get('duracion')?.invalid">Duración debe ser un número entero mayor que 0</mat-error>
-  </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Duración (meses)</mat-label>
+      <input matInput type="number" formControlName="duracion" placeholder="Meses" />
+      <mat-error *ngIf="formPlan.get('duracion')?.invalid">Duración debe ser un número entero mayor que 0</mat-error>
+    </mat-form-field>
 
-  <mat-form-field class="w-full">
-    <mat-label>Límite de firmas</mat-label>
-    <input matInput type="number" formControlName="limiteFirmas" placeholder="Límite de firmas" />
-    <mat-error *ngIf="formPlan.get('limiteFirmas')?.invalid">Debe ser un número entero mayor que 0</mat-error>
-  </mat-form-field>
+    <!-- Fila con tres campos: Límite de firmas, Límite de certificados, Cantidad de validaciones -->
+    <div class="w-full grid grid-cols-1 sm:grid-cols-3 gap-4 md:col-span-2">
+      <mat-form-field class="w-full">
+        <mat-label>Límite de firmas</mat-label>
+        <input matInput type="number" formControlName="limiteFirmas" placeholder="Límite de firmas" />
+        <mat-error *ngIf="formPlan.get('limiteFirmas')?.invalid">Debe ser un número entero mayor que 0</mat-error>
+      </mat-form-field>
 
-  <mat-form-field class="w-full">
-    <mat-label>Límite de certificados</mat-label>
-    <input matInput type="number" formControlName="limiteCertificados" placeholder="Límite de certificados" />
-    <mat-error *ngIf="formPlan.get('limiteCertificados')?.invalid">Debe ser un número entero mayor que 0</mat-error>
-  </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Límite de certificados</mat-label>
+        <input matInput type="number" formControlName="limiteCertificados" placeholder="Límite de certificados" />
+        <mat-error *ngIf="formPlan.get('limiteCertificados')?.invalid">Debe ser un número entero mayor que 0</mat-error>
+      </mat-form-field>
 
-  <mat-form-field class="w-full">
-    <mat-label>Inicio</mat-label>
-    <input matInput [matDatepicker]="picker" formControlName="inicio" />
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker startView="month"></mat-datepicker>
-    <mat-error *ngIf="formPlan.get('inicio')?.invalid">Selecciona una fecha válida</mat-error>
-  </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Cantidad de validaciones</mat-label>
+        <input matInput type="number" formControlName="cantidadValidaciones" placeholder="Cantidad de validaciones" />
+        <mat-error *ngIf="formPlan.get('cantidadValidaciones')?.invalid">Debe ser un número entero mayor que 0</mat-error>
+      </mat-form-field>
+    </div>
 
-  <!-- Columna Derecha -->
-  <mat-form-field class="w-full">
-    <mat-label>Costo</mat-label>
-    <input matInput type="number" formControlName="costo" placeholder="Costo" />
-    <mat-error *ngIf="formPlan.get('costo')?.invalid">Debe ser un número mayor que 0 y con máximo 2 decimales</mat-error>
-  </mat-form-field>
+    <!-- Campo Inicio en una nueva fila -->
+    <mat-form-field class="w-full">
+      <mat-label>Inicio</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="inicio" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker startView="month"></mat-datepicker>
+      <mat-error *ngIf="formPlan.get('inicio')?.invalid">Selecciona una fecha válida</mat-error>
+    </mat-form-field>
 
-  <mat-form-field class="w-full">
-    <mat-label>Tipo de pago</mat-label>
-    <mat-select formControlName="tipoPago">
-      <mat-option value="mensual">Mensual</mat-option>
-      <mat-option value="anual">Anual</mat-option>
-    </mat-select>
-    <mat-error *ngIf="formPlan.get('tipoPago')?.invalid">Campo obligatorio</mat-error>
-  </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Costo</mat-label>
+      <input matInput type="number" formControlName="costo" placeholder="Costo" />
+      <mat-error *ngIf="formPlan.get('costo')?.invalid">Debe ser un número mayor que 0 y con máximo 2 decimales</mat-error>
+    </mat-form-field>
 
-  <mat-form-field class="w-full">
-    <mat-label>Moneda</mat-label>
-    <mat-select formControlName="moneda">
-      <mat-option value="USD">USD</mat-option>
-      <mat-option value="EUR">EUR</mat-option>
-    </mat-select>
-    <mat-error *ngIf="formPlan.get('moneda')?.invalid">Campo obligatorio</mat-error>
-  </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Tipo de pago</mat-label>
+      <mat-select formControlName="tipoPago">
+        @for (item of tiposPago; track $index) {
+          <mat-option value="{{ item.id }}">{{ item.descripcion }}</mat-option>
+        }
+      </mat-select>
+      <mat-error *ngIf="formPlan.get('tipoPago')?.invalid">Campo obligatorio</mat-error>
+    </mat-form-field>
 
-  <mat-form-field class="w-full md:col-span-2">
-    <mat-label>Descripción</mat-label>
-    <textarea matInput formControlName="descripcion" placeholder="Descripción"></textarea>
-    <mat-error *ngIf="formPlan.get('descripcion')?.invalid">Debe contener letras y números</mat-error>
-  </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Moneda</mat-label>
+      <mat-select formControlName="moneda">
+        @for (item of monedas; track $index) {
+          <mat-option value="{{ item.id }}">{{ item.descripcion }}</mat-option>
+        }
+      </mat-select>
+      <mat-error *ngIf="formPlan.get('moneda')?.invalid">Campo obligatorio</mat-error>
+    </mat-form-field>
 
-  <div class="w-full">
-    <label class="block text-lg font-medium mb-2">Estado del plan</label>
-    <mat-checkbox formControlName="planActivo">
-        {{ formPlan.get('planActivo')?.value ? 'Plan activo' : 'Plan inactivo' }}
-    </mat-checkbox>
-  </div>
+    <mat-form-field class="w-full md:col-span-2">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput formControlName="descripcion" placeholder="Descripción"></textarea>
+      <mat-error *ngIf="formPlan.get('descripcion')?.invalid">Debe contener letras y números</mat-error>
+    </mat-form-field>
 
-  <div class="w-full flex justify-end">
-    <mat-radio-group aria-label="Select an option">
-      <mat-radio-button class="mr-4" value="1">Aplica Cliente API</mat-radio-button>
-      <mat-radio-button class="mr-2" value="2">Aplica Cliente</mat-radio-button>
-    </mat-radio-group>
-  </div>
+    <div class="w-full md:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
+      <div class="w-full">
+        <label class="block text-lg font-medium mb-2">Estado del plan</label>
+        <mat-checkbox formControlName="activo">
+          {{ formPlan.get('activo')?.value ? 'Plan activo' : 'Plan inactivo' }}
+        </mat-checkbox>
+      </div>
 
-  <!-- Botones de Acción -->
-  <div class="w-full md:col-span-2 flex justify-end space-x-2">
-    <button mat-raised-button type="button" (click)="onCancel()">Cancelar</button>
-    <button mat-raised-button color="primary" type="submit" [disabled]="formPlan.invalid">Guardar</button>
-  </div>
-</form>
+      <mat-radio-group aria-label="Selecciona una opción" class="example-radio-group" (change)="onAplicaClienteChange($event)">
+        <mat-radio-button class="mr-4" value="1">Aplica Cliente API</mat-radio-button>
+        <mat-radio-button class="mr-2" value="2">Aplica Cliente</mat-radio-button>
+      </mat-radio-group>
+
+      <ng-container *ngIf="showTipoCliente">
+        <mat-radio-group aria-label="Selecciona un tipo de cliente" class="example-radio-group">
+          <mat-radio-button class="mr-4" value="1">Cliente Natural</mat-radio-button>
+          <mat-radio-button class="mr-2" value="2">Cliente Jurídico</mat-radio-button>
+        </mat-radio-group>
+      </ng-container>
+    </div>
+
+    <div class="w-full md:col-span-2 flex justify-end space-x-2">
+      <button mat-raised-button type="button" (click)="onCancel()">Cancelar</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="formPlan.invalid">Guardar</button>
+    </div>
+  </form>
+}

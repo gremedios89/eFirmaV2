@@ -17,6 +17,8 @@ import { PlansService } from 'app/core/services/plans/plans.service';
 import { Subject, takeUntil } from 'rxjs';
 import { PlanDetailsComponent } from '../plan-details/plan-details.component';
 import { AddPlanComponent } from '../add-plan/add-plan.component';
+import { ConfirmDeletePlanComponent } from '../confirm-delete-plan/confirm-delete-plan.component';
+import { NotificationsService } from 'app/core/services/notifications/notifications.service';
 
 @Component({
   selector: 'app-plan-list',
@@ -39,7 +41,7 @@ export class PlanListComponent implements OnInit {
 
   readonly dialog = inject(MatDialog);
 
-  constructor(private plansService: PlansService) {
+  constructor(private plansService: PlansService, private notificationService: NotificationsService) {
 
   }
 
@@ -85,13 +87,32 @@ export class PlanListComponent implements OnInit {
       width: '800px',
       maxHeight: '90vh',
       data: {
-        role: element,
+        plan: element,
       },
     });
   }
 
-  deletePlan(): void {
+  deletePlan(element: any): void {
+    const dialogRef = this.dialog.open(ConfirmDeletePlanComponent, {
+      width: '500px',
+      data: {
+        plan: element
+      }
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.plansService.deletePlan(element.id).subscribe({
+          next: (resp) => {
+            this.loadPlanList();
+            this.notificationService.showSuccess(`El Plan <strong>${element.name}</strong> se ha eliminado exitosamente.`);
+          },
+          error: (error) => {
+            console.log(error);
+          }
+        });
+      }
+    });
   }
 
   planDetail(element: any): void {
